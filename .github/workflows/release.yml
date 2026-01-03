@@ -1,62 +1,38 @@
-name: Release
-
+name: Release Extension
 on:
   push:
-    branches: [main]
-    paths:
-      - 'src/**'
-      - 'icons/**'
-      - 'manifest.json'
-      - 'rules.json'
-      - 'CHANGELOG.md'
+    tags:
+      - 'v*'
 
 jobs:
-  build-and-release:
+  release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: 'src/package-lock.json'
+          node-version: 20
 
-      - name: Install dependencies
-        working-directory: src
-        run: npm ci
-
-      - name: Build extension
-        working-directory: src
-        run: npm run build
-
-      - name: Package extension
+      - name: Build Extension
         run: |
-          mkdir -p artifacts
-          zip -r artifacts/php-debugger-extension.zip \
-            manifest.json \
-            rules.json \
-            icons/ \
-            dist/ \
-            -x "dist/.git*" "dist/.nuxt*"
+          cd src
+          npm install
+          npm run build
 
-      - name: Get version
-        id: version
+      - name: Package Extension
         run: |
-          VERSION=$(grep '"version"' manifest.json | head -1 | sed 's/.*"version": "//;s/".*//')
-          echo "version=v$VERSION" >> $GITHUB_OUTPUT
+          # This zips the root files (manifest, icons, etc.) 
+          # but ignores heavy dev folders
+          zip -r php-debugger-extension.zip . -x "src/node_modules/*" ".git*" ".github*" "src/.nuxt/*"
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.version.outputs.version }}
-          name: PHP Debugger Forensics ${{ steps.version.outputs.version }}
-          body_path: CHANGELOG.md
-          files: artifacts/php-debugger-extension.zip
-          draft: false
-          prerelease: false
+          files: php-debugger-extension.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
