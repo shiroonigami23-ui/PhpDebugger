@@ -1,0 +1,62 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'icons/**'
+      - 'manifest.json'
+      - 'rules.json'
+      - 'CHANGELOG.md'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'src/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: src
+        run: npm ci
+
+      - name: Build extension
+        working-directory: src
+        run: npm run build
+
+      - name: Package extension
+        run: |
+          mkdir -p artifacts
+          zip -r artifacts/php-debugger-extension.zip \
+            manifest.json \
+            rules.json \
+            icons/ \
+            dist/ \
+            -x "dist/.git*" "dist/.nuxt*"
+
+      - name: Get version
+        id: version
+        run: |
+          VERSION=$(grep '"version"' manifest.json | head -1 | sed 's/.*"version": "//;s/".*//')
+          echo "version=v$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: PHP Debugger Forensics ${{ steps.version.outputs.version }}
+          body_path: CHANGELOG.md
+          files: artifacts/php-debugger-extension.zip
+          draft: false
+          prerelease: false

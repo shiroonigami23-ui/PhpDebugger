@@ -1,0 +1,29 @@
+{
+  "name": "php-debugger-extension",
+  "version": "0.1.0",
+  "description": "PHP Debugger Forensics Chrome Extension",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build && node scripts/build-extension.mjs",
+    "build:analyze": "nuxi analyze",
+    "lint": "eslint . --ext .ts,.js,.vue",
+    "lint:fix": "eslint . --ext .ts,.js,.vue --fix",
+    "type-check": "nuxi typecheck",
+    "preview": "nuxi preview"
+  },
+  "dependencies": {
+    "nuxt": "^3.13.0",
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.0",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.7.0"
+  }
+}
