@@ -1,6 +1,6 @@
 ---
 title: "PHP Debugger Forensics: Making Silent Backend Failures Visible from the Browser"
-subtitle: "Technical Whitepaper — v0.1"
+subtitle: "Whitepaper — why I built it, how it works, and where it's going (v0.1)"
 author: "Aryan Singh Chandel (shiroonigami23-ui)"
 date: "November 2026"
 ---
@@ -8,6 +8,21 @@ date: "November 2026"
 # Abstract
 
 Many PHP/SQL web applications fail *quietly*. A request returns `500` with an empty body, a database connection times out behind a generic error page, or an auth failure is swallowed by the front end. The person who sees the bug, often a tester or end user, cannot describe it. The developer who could fix it cannot reproduce it. **PHP Debugger Forensics** is a Chrome (Manifest V3) extension that closes this gap **without any change to the backend**. A **DevTools panel** gives developers network forensics and failure classification. A **tester popup** gives anyone a *Record → Reproduce → Export* flow that produces a sanitised incident bundle. This paper describes the problem, the architecture, the classification model, the privacy design and the roadmap. A live demo site is published from the same codebase.
+
+# Why I built this
+
+Across the PHP + MySQL projects I've built, the worst bugs were never the loud ones. They were the ones where a tester said "the button doesn't work" and I opened the page and everything looked fine. Somewhere a request had returned `500` with an empty body, or a PDO connection had timed out, and that evidence was gone the moment they closed the tab. I'd end up asking non-technical people to "open DevTools, go to Network, filter by Fetch/XHR, right-click, Save as HAR…", which never works.
+
+So I wanted two things in one extension: a **proper forensic view for me** inside DevTools, and a **two-button recorder for everyone else**, without having to touch the backend of every project I'd ever shipped.
+
+# The journey so far
+
+| When | Milestone | What I learned |
+|---|---|---|
+| Jan 2026 | Designed the dual-mode idea and the MV3 structure (service worker, DevTools page, popup); built both UIs in Nuxt 3 + Tailwind; set up release automation | One Nuxt codebase can produce several extension pages, and the service worker has to be the single source of truth because MV3 pages are short-lived |
+| Jan 2026 | Message bus in `background.ts` (start / stop / get / clear capture) | Keep the event model small and flat, so a bundle is easy to diff and attach to a ticket |
+| Nov 2026 | Real landing page, a live interactive demo on Vercel, a new icon and fixed build tooling | Static generation needs the Nitro preset pinned on CI, and peer-dependency drift in lint tooling can break an otherwise working project |
+| Next | Wire live `chrome.devtools.network` and `webRequest` events into the session store | — |
 
 # 1. Problem statement
 
