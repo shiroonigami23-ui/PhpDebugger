@@ -12,7 +12,7 @@
     "lint:fix": "eslint . --fix",
     "type-check": "nuxi typecheck",
     "preview": "nuxi preview",
-    "generate": "nuxi generate",
+    "generate": "NITRO_PRESET=static nuxi generate",
     "postinstall": "nuxi prepare"
   },
   "dependencies": {
