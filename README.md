@@ -1,121 +1,151 @@
-# PHP Debugger Forensics
+<div align="center">
 
-![PHP Debugger Extension](icons/icon-1024.png)
+<img src="icons/icon-1024.png" alt="PHP Debugger Forensics" width="25%">
 
-**PHP Debugger Forensics** is a production-ready Chrome extension that makes debugging silent PHP/SQL errors and backend issues dramatically easier. It works in two modes:
+# 🐞 PHP Debugger Forensics
 
-- **DevTools Panel** – Real-time network forensics, failure pattern detection, and correlation ID lookup for developers
-- **User/Popup Mode** – Simple "Record → Reproduce → Export" workflow for non-technical testers to share clean incident bundles
+### Chrome extension that makes silent PHP/SQL backend failures visible — DevTools forensics and tester-friendly bug bundles
 
-## Why This Exists
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
 
-Backend errors in PHP apps often fail silently:
-- `500 Internal Server Error` with an empty response body
-- Database connection errors that never reach the frontend
-- SQL query failures buried in server logs
-- Timeouts, deadlocks, and auth issues that leave users confused
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE) ![Last commit](https://img.shields.io/github/last-commit/shiroonigami23-ui/PhpDebugger?style=flat-square) ![Repo size](https://img.shields.io/github/repo-size/shiroonigami23-ui/PhpDebugger?style=flat-square) ![Top language](https://img.shields.io/github/languages/top/shiroonigami23-ui/PhpDebugger?style=flat-square) ![Status](https://img.shields.io/badge/status-active-blueviolet?style=flat-square)
 
-**PHP Debugger Forensics** makes these visible and actionable **without modifying your backend code** (though it pairs beautifully with correlation IDs if you want to).
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/shiroonigami23-ui/PhpDebugger?quickstart=1) [![Download ZIP](https://img.shields.io/badge/Download-ZIP-2ea44f?style=flat-square&logo=github)](https://github.com/shiroonigami23-ui/PhpDebugger/archive/refs/heads/main.zip)
 
-## Features
+[**Overview**](#-overview) · [**Features**](#-features) · [**Architecture**](#-architecture) · [**Getting Started**](#-getting-started) · [**Roadmap**](#-roadmap)
 
-✅ **Dual-mode UI**
-- DevTools panel for developers (live inspection, analysis, export)
-- Toolbar popup for users (guided recording, clean export)
+</div>
 
-✅ **Network Forensics**
-- Capture request/response metadata (method, URL, status, timing, headers)
-- Timeline and TTFB analysis
-- Response payload inspection (sanitized)
+---
 
-✅ **Intelligent Failure Classification**
-- Network/TLS failures
-- CORS issues
-- Auth failures (401/403)
-- Rate limiting (429)
-- Upload size limits (413)
-- Server errors (5xx)
+## 📖 Overview
 
-✅ **Production-Ready**
-- Correlation ID support (find errors in logs faster)
-- Sanitization by default (no passwords, keys, or PII leakage)
-- Exportable incident bundles (shareable JSON + cURL commands)
-- Works with zero backend changes
+**PHP Debugger Forensics** is a Chrome extension for the backend bugs users can't see: `500` errors with empty bodies, database connection failures, buried SQL errors, timeouts and auth issues. Developers get a **DevTools panel** with real-time **network forensics**, **failure-pattern classification**, timing/TTFB analysis and **correlation-ID** lookup; non-technical testers get a simple **Record → Reproduce → Export** popup that produces a clean, sanitised incident bundle — all **without modifying your backend**.
 
-✅ **Developer-Friendly**
-- Built with Nuxt 3 + TypeScript + Tailwind
-- Manifest V3 (modern, secure)
-- Full source code + MIT license
+### ✨ Highlights
 
-## Installation
+- **Dual-mode UI** — DevTools panel + tester popup
+- **Failure classification** for PHP/SQL patterns
+- **Sanitised exports** safe to attach to tickets
 
-### From GitHub Releases (User)
+## 🧩 Features
 
-1. Download the latest `php-debugger-extension.zip` from [Releases](https://github.com/YOUR_USERNAME/PhpDebugger/releases)
-2. Extract it to a folder
-3. Open `chrome://extensions`
-4. Enable **Developer mode** (top-right toggle)
-5. Click **Load unpacked** and select the extracted folder
-6. Done! You'll see the PHP Debugger icon in your toolbar
+| Feature | What it does |
+|---|---|
+| **Network forensics** | Method, URL, status, timing, headers |
+| **Timeline** | Request waterfall and TTFB analysis |
+| **Payload inspection** | Sanitised response bodies |
+| **Failure classification** | Detects 500s, DB errors, timeouts, auth failures |
+| **Correlation IDs** | Match front-end failures to server logs |
+| **Recorder** | Record → Reproduce → Export for testers |
 
-### From Source (Developer)
+## 🛠 Tech Stack
 
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/PhpDebugger.git
-   cd PhpDebugger
-   ```
+| Layer | Technology |
+|---|---|
+| Extension | Manifest V3, declarative rules |
+| UI | Nuxt, TypeScript, Tailwind |
+| CI | GitHub Actions |
 
-2. Install dependencies:
-   ```bash
-   cd src
-   npm install
-   ```
+## 🏗 Architecture
 
-3. Build the extension:
-   ```bash
-   npm run build
-   ```
 
-4. Load into Chrome:
-   - Open `chrome://extensions`
-   - Enable **Developer mode**
-   - Click **Load unpacked** → select the `PhpDebugger` root folder
 
-## Usage
+```mermaid
+flowchart LR
+  PG[Web app] --> NET[Network events]
+  NET --> BG[Extension background]
+  BG --> CLS[Failure classifier]
+  CLS --> DT[DevTools panel]
+  CLS --> POP[Popup recorder]
+  POP --> EX[Sanitised incident bundle]
+```
 
-### User Mode (Popup)
+➡️ Full design notes, data flow and design decisions: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**
 
-1. Click the **PHP Debugger Forensics** icon in your toolbar
-2. Click **Start Recording**
-3. Go back to the tab and reproduce the problem
-4. Return to the popup and click **Stop & Export**
-5. A JSON bundle is generated; share it with the dev team
+## 📁 Project Structure
 
-The bundle includes:
-- All captured network requests
-- Timing data
-- Response status codes and headers
-- User environment (browser, OS)
-- No sensitive data (passwords, tokens are stripped)
+```text
+PhpDebugger/
+├── manifest.json · rules.json
+├── src/            # Nuxt app (DevTools panel & popup)
+└── icons/
+```
 
-### DevTools Mode (Panel)
+## 🚀 Getting Started
 
-1. Open **DevTools** (F12 or Cmd+Option+I)
-2. Switch to the **PHP Debugger Forensics** tab
-3. Click **Start Capture**
-4. Reproduce the issue on the page
-5. Inspect failures in real-time:
-   - See all requests grouped by endpoint
-   - View timing and status codes
-   - Read "likely cause" hints
-   - Copy cURL reproduction commands
-   - Export full incident bundle
+### 1. Get the code
 
-## License
+Pick whichever method suits you:
 
-MIT – Free for personal and commercial use.
+| Method | Command |
+|---|---|
+| **HTTPS** | `git clone https://github.com/shiroonigami23-ui/PhpDebugger.git` |
+| **SSH** | `git clone git@github.com:shiroonigami23-ui/PhpDebugger.git` |
+| **GitHub CLI** | `gh repo clone shiroonigami23-ui/PhpDebugger` |
+| **ZIP** | [Download](https://github.com/shiroonigami23-ui/PhpDebugger/archive/refs/heads/main.zip) and extract |
+| **Codespaces** | [Open in browser](https://codespaces.new/shiroonigami23-ui/PhpDebugger?quickstart=1) — zero local setup, dev container preconfigured |
 
-## Contributing
+> 🔑 **Using SSH for the first time?** Generate a key with `ssh-keygen -t ed25519 -C "you@example.com"`, add the `.pub` contents at **GitHub → Settings → SSH and GPG keys**, then test with `ssh -T git@github.com`.
 
-Contributions welcome! Open issues or PRs on GitHub.
+### 2. Install & set up
+
+```bash
+cd PhpDebugger
+cd src && npm install && npm run build
+```
+
+### 3. Run
+
+Load the built extension via `chrome://extensions` → **Load unpacked**. Open DevTools → **PHP Debugger** panel.
+
+## 🗺 Roadmap
+
+**v1 (done)**
+
+- [x] DevTools panel, popup recorder, classification, export
+
+**v1.1**
+
+- [ ] Laravel / WordPress specific detectors
+- [ ] HAR import
+- [ ] Companion PHP middleware that adds correlation IDs
+
+**v2.0**
+
+- [ ] Firefox build
+- [ ] Team sharing of incident bundles
+
+➡️ Detailed plan, milestones and long-term vision: **[docs/ROADMAP.md](docs/ROADMAP.md)**
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m "feat: add amazing feature"`
+4. Push the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request against `main`
+
+Check the [issues page](https://github.com/shiroonigami23-ui/PhpDebugger/issues) and the [roadmap](docs/ROADMAP.md) for ideas on where to help.
+
+## 📜 Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for the release history.
+
+## 📄 License
+
+Distributed under the **MIT** license. See [LICENSE](LICENSE) for details.
+
+## 👤 Author
+
+**Aryan Singh Chandel** (Shiro)
+
+[![GitHub](https://img.shields.io/badge/GitHub-shiroonigami23--ui-181717?style=flat-square&logo=github)](https://github.com/shiroonigami23-ui)
+
+<div align="center">
+
+⭐ **If you find this project useful, consider giving it a star!** ⭐
+
+</div>
