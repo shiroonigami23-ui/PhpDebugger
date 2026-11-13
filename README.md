@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="icons/icon-1024.png" alt="PHP Debugger Forensics" width="25%">
+<img src="assets/phpdebugger-anim.gif" alt="PHP Debugger Forensics" width="100%">
 
 # 🐞 PHP Debugger Forensics
 
@@ -17,6 +17,8 @@
 </div>
 
 ---
+
+<p align="center"><img src="assets/hero.png" alt="PHP Debugger Forensics art" width="99%"></p>
 
 ## 📖 Overview
 
