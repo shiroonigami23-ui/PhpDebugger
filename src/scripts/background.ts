@@ -1,3 +1,4 @@
+/// <reference types="chrome" />
 /**
  * Service Worker for PHP Debugger Forensics
  * Coordinates message passing between DevTools panel, popup, and content scripts

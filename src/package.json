@@ -8,22 +8,24 @@
     "dev": "nuxi dev",
     "build": "nuxi build && node scripts/build-extension.mjs",
     "build:analyze": "nuxi analyze",
-    "lint": "eslint . --ext .ts,.js,.vue",
-    "lint:fix": "eslint . --ext .ts,.js,.vue --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "type-check": "nuxi typecheck",
-    "preview": "nuxi preview"
+    "preview": "nuxi preview",
+    "generate": "nuxi generate",
+    "postinstall": "nuxi prepare"
   },
   "dependencies": {
     "nuxt": "^3.13.0",
     "vue": "^3.5.0"
   },
   "devDependencies": {
+    "@nuxt/eslint": "^1.0.0",
     "@nuxtjs/tailwindcss": "^6.12.0",
-    "@nuxtjs/eslint-config-typescript": "^12.1.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
+    "@types/chrome": "^0.3.7",
     "eslint": "^9.0.0",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vue-tsc": "^2.1.0"
   }
 }

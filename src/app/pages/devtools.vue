@@ -4,9 +4,7 @@
     <header class="px-4 py-3 border-b border-slate-800 bg-slate-900/50 sticky top-0 z-10">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center text-xs font-bold text-slate-900">
-            PD
-          </div>
+          <img src="/icon.png" alt="PHP Debugger" class="w-6 h-6 rounded-md">
           <div>
             <h1 class="text-sm font-semibold">PHP Debugger Forensics</h1>
             <p class="text-[11px] text-slate-400">DevTools Panel – Network Forensics & Incident Management</p>

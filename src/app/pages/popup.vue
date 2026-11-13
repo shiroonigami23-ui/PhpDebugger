@@ -3,9 +3,7 @@
     <!-- Header -->
     <header class="px-4 py-3 border-b border-slate-800 bg-slate-900/50">
       <div class="flex items-center gap-2 mb-2">
-        <div class="w-7 h-7 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center text-xs font-bold text-slate-900">
-          PD
-        </div>
+        <img src="/icon.png" alt="PHP Debugger" class="w-7 h-7 rounded-md">
         <div>
           <h1 class="text-sm font-semibold">PHP Debugger</h1>
           <p class="text-[10px] text-slate-400">User Mode – Bug Reporter</p>
@@ -35,12 +33,15 @@
       </div>
 
       <div class="flex gap-2">
-        <button class="flex-1 px-3 py-2 rounded bg-cyan-600 hover:bg-cyan-700 text-slate-950 font-medium text-xs transition">
-          Start Recording
+        <button class="flex-1 px-3 py-2 rounded bg-cyan-600 hover:bg-cyan-700 text-slate-950 font-medium text-xs transition disabled:opacity-50" :disabled="recording" @click="start">
+          {{ recording ? `Recording… ${seconds}s` : 'Start Recording' }}
         </button>
-        <button class="flex-1 px-3 py-2 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-medium text-xs transition" disabled>
+        <button class="flex-1 px-3 py-2 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-medium text-xs transition disabled:opacity-50" :disabled="!recording" @click="stop">
           Stop & Export
         </button>
+      </div>
+      <div v-if="exported" class="bg-emerald-950/50 border border-emerald-800 rounded p-3 text-[11px] text-emerald-300">
+        ✓ Demo bundle <span class="font-mono">incident-{{ exported }}.json</span> ready ({{ captured }} requests captured, secrets redacted).
       </div>
 
       <div class="bg-slate-900/50 border border-slate-800 rounded p-3 text-[11px] space-y-2">
@@ -67,3 +68,27 @@
     </footer>
   </div>
 </template>
+
+<script setup lang="ts">
+const recording = ref(false)
+const seconds = ref(0)
+const exported = ref('')
+const captured = ref(0)
+let timer: ReturnType<typeof setInterval> | undefined
+
+function start () {
+  exported.value = ''
+  recording.value = true
+  seconds.value = 0
+  timer = setInterval(() => { seconds.value++ }, 1000)
+}
+
+function stop () {
+  if (timer) { clearInterval(timer) }
+  recording.value = false
+  captured.value = 3 + seconds.value * 2
+  exported.value = Date.now().toString(36)
+}
+
+onBeforeUnmount(() => { if (timer) { clearInterval(timer) } })
+</script>

@@ -8,3 +8,4 @@ dist/
 *.swp
 .vscode/
 .idea/
+src/dist
