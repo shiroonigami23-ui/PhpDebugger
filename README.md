@@ -12,7 +12,7 @@
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/shiroonigami23-ui/PhpDebugger?quickstart=1) [![Download ZIP](https://img.shields.io/badge/Download-ZIP-2ea44f?style=flat-square&logo=github)](https://github.com/shiroonigami23-ui/PhpDebugger/archive/refs/heads/main.zip)
 
-[**Overview**](#-overview) · [**Features**](#-features) · [**Architecture**](#-architecture) · [**Getting Started**](#-getting-started) · [**Roadmap**](#-roadmap)
+[**🚀 Live Demo**](https://php-debugger-85vr7k4vo-shiroonis-projects.vercel.app) · [**Overview**](#-overview) · [**Features**](#-features) · [**Architecture**](#-architecture) · [**Getting Started**](#-getting-started) · [**Roadmap**](#-roadmap)
 
 </div>
 
@@ -44,6 +44,12 @@
 | **Failure classification** | Detects 500s, DB errors, timeouts, auth failures |
 | **Correlation IDs** | Match front-end failures to server logs |
 | **Recorder** | Record → Reproduce → Export for testers |
+
+## 📄 Technical Whitepaper
+
+**[Read the whitepaper (PDF)](docs/WHITEPAPER.pdf)** · [Markdown version](docs/WHITEPAPER.md)
+
+The silent-failure problem, MV3 architecture, failure classification, privacy design and roadmap.
 
 ## 🛠 Tech Stack
 
