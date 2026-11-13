@@ -45,11 +45,11 @@
 | **Correlation IDs** | Match front-end failures to server logs |
 | **Recorder** | Record → Reproduce → Export for testers |
 
-## 📄 Technical Whitepaper
+## 📖 The Build Journey
 
-**[Read the whitepaper (PDF)](docs/WHITEPAPER.pdf)** · [Markdown version](docs/WHITEPAPER.md)
+**[Read the full story (PDF, 34 pages)](docs/WHITEPAPER.pdf)** · [Markdown version](docs/WHITEPAPER.md)
 
-Why I built it, the journey so far, the silent-failure problem, MV3 architecture, failure classification, privacy design and roadmap.
+Why I built it, where I was when I started, how it works under the hood, everything that broke and how I fixed it, what I learned, and where it's going next.
 
 ## 🛠 Tech Stack
 
