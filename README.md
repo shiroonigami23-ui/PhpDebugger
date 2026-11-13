@@ -18,7 +18,11 @@
 
 ---
 
-<p align="center"><img src="assets/hero.png" alt="PHP Debugger Forensics art" width="99%"></p>
+<p align="center"><img src="assets/site-landing.png" alt="PHP Debugger Forensics art" width="49%"> <img src="assets/site-popup-demo.png" alt="PHP Debugger Forensics art" width="49%"></p>
+
+## 📸 Preview
+
+<p align="center"><img src="assets/hero.png" alt="PHP Debugger Forensics preview" width="85%"></p>
 
 ## 📖 Overview
 
